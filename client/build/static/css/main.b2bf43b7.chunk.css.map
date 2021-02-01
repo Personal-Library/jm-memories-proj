@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,KACE,2CAA6C,CAC7C,qDAAA,CACA,2BAA4B,CAC5B,uBACF","file":"main.b2bf43b7.chunk.css","sourcesContent":["body {\n  background: linear-gradient(#e66465, #9198e5);\n  background-image: url(\"./images/fido.png\");\n  background-attachment: fixed;\n  background-position: center;\n}"]}

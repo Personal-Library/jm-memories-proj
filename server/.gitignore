@@ -1,3 +1,2 @@
 # This .gitignore applies to heroku deploy only
-
 node_modules
