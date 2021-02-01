@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import PostMessage from '../models/postMessage.js';
 
 // All handlers for route because we don't want to keep all the logic in ./routes/posts.js
@@ -21,3 +22,48 @@ export const createPost = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+export const updatePost = async (req, res) => {
+  const { id: _id } = req.params;
+  const post = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(404).send('No post with that id.');
+  }
+
+  try {
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, { new: true });
+    res.json(updatedPost);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const deletePost = async (req, res) => {
+  const { id: _id } = req.params;
+  
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(404).send('No post with that id.');
+  }
+
+  await PostMessage.findByIdAndRemove(_id);
+
+  res.json({ message: 'Post deleted'})
+}
+
+export const likePost = async (req, res) => {
+  const { id: _id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(404).send('No post with that id.');
+  }
+
+  try {
+    const post = await PostMessage.findById(_id);
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, { likeCount: post.likeCount + 1 }, { new: true })
+    res.json(updatedPost)
+  } catch (error) {
+    console.log(error)
+  }
+
+}
